@@ -53,6 +53,8 @@
 #define outKnobCLK 10
 #define outKnobDT 27
 
+
+//Global variables
 int display;
 int output=0;
 int bank=0;
@@ -68,7 +70,7 @@ short all_muted=0;
 
 
 
-
+//converts a float into an array of 4 Bytes
 uint8_t* f2b(float f_val){
     uint8_t *bytes=calloc(4,sizeof(uint8_t));
     int32_t* fasi=&f_val;
@@ -80,6 +82,7 @@ uint8_t* f2b(float f_val){
 
 }
 
+//converts an array of 4 bytes into a float
 float b2f(uint8_t* b_val){
     float *f_val=0;
     uint32_t fasi=0;
@@ -90,12 +93,15 @@ float b2f(uint8_t* b_val){
     f_val=&fasi;
     return *(f_val);
 }
+
+
 char* fill0(int num){
     char* outp="__";
     outp[0]=('0')+num/10;
     outp[1]='0'+num % 10;
     return outp;
 }
+
 
 char* name_req_msg(char* num){
     char* msg=calloc(28,sizeof(uint8_t));
@@ -148,7 +154,7 @@ char* fader_set_msg(channel* c, int output){
     return msg;
 }
 
-
+//sends a fader value for a specific  channel to the mixer
 void set_fader(channel * c, int output){
     char *set_msg=fader_set_msg(c,output);
     to_mixer(set_msg,28);
@@ -168,6 +174,12 @@ char *fader_req_msg(channel *c, int output){
 }
 
 
+
+/*gets the fader value for a given channel from the mixer
+ *You might notice the while(finde_mixer)-loop. This is because this function is called
+ periodically and also has the functionality of checking whether there is still
+ a connection to the mixer. It's not very pretty. Will fix that in the future (#TODO)
+ */
 int refresh_fader_value(channel* chan, int output){
     float before=chan->fader_val[output];
     char *req_m=fader_req_msg(chan, output);
@@ -195,10 +207,9 @@ int refresh_fader_value(channel* chan, int output){
         ts.tv_sec=0;
         ts.tv_nsec=2e8;
         while(find_mixer()==-1){
-            printf("noch nicht gefunden\n");
             lcdClear(display);
             lcdHome(display);
-            lcdPrintf(display," Verb. verloren ");
+            lcdPrintf(display,"Lost  connection");
             for (int i=0;i<16;i++){
                 lcdPosition(display,i,1);
                 lcdPrintf(display,".");
@@ -386,7 +397,6 @@ void initialize_pins(){
 
 void refresh_status(int switched){
     if (switched==0){
-        printf("aktualisiere unteren bereich des lcd\n");
         lcdPrint_lower2(channel_list[total_channel],output, display);
     }
     else if (switched){
@@ -501,7 +511,7 @@ void toggle_bank(void){
 
 void change_vol(void){
     if (digitalRead(volKnobCLK)!=digitalRead(volKnobDT)){
-        //volume erhoehen
+        //Increase volume
         float new_val=channel_list[total_channel]->fader_val[output]+0.02*fine_mode;
         if (new_val>=1.0){
             new_val=1.0;
@@ -510,7 +520,7 @@ void change_vol(void){
         set_fader(channel_list[total_channel],output);
     }
     else {
-        //volume verringern
+        //decrease volume
         float new_val=channel_list[total_channel]->fader_val[output]-0.02*fine_mode;
         if (new_val<=0.0){
             new_val=0.0;
@@ -524,11 +534,11 @@ void change_vol(void){
 
 void change_output(void){
     if (digitalRead(outKnobCLK)!=digitalRead(outKnobDT)){
-        //naechster output
+        //next output
         output=(output+1)%7;
     }
     else {
-        //vorheriger output
+        //previous output
         output=(output+6)%7;
     }
     changed=1;
@@ -540,14 +550,11 @@ void t_mute(void){
         return;
     }
     toggle_mute(channel_list[total_channel]);
-    
-    changed=1;
-  
+    changed=1; 
 }
 
 
 void mute_all(void){
-    printf("zugriff\n");
     if (!digitalRead(buttonMuteOutputs)){
         return;
     }
@@ -605,15 +612,12 @@ int main (int argc,char** argv){
 
     //initialize networksocket
     ini_bc_net();
-    printf("initialisiert\n");
 
-    
     //try to find the mixer
     while(find_mixer()==-1){
-        printf("noch nicht gefunden\n");
         lcdClear(display);
         lcdHome(display);
-        lcdPrintf(display," Initialisieren ");
+        lcdPrintf(display,"   Initialize   ");
         for (int i=0;i<16;i++){
             lcdPosition(display,i,1);
             lcdPrintf(display,".");
@@ -621,23 +625,13 @@ int main (int argc,char** argv){
         }
     }
     
-    //channel** channel_list;
-    //char** output_names;
-    
     channel_list=calloc(16,sizeof(channel*));
     output_names=calloc(7,sizeof(char*));
     
-
     //load all information from the mixer
     startup(channel_list,output_names);
-       
-
-    printf("aktueller channel: %s\n",channel_list[total_channel]->name);
-
    
     lcdPrint_status(channel_list,total_channel,output_names,output,display);
-
-    printf("Startup fertig\n");
     
     ts.tv_sec=1;
     ts.tv_nsec=0;
@@ -646,10 +640,6 @@ int main (int argc,char** argv){
     while(1){
         total_channel=active_channel+bank;
         sleep(1);
-        
-        printf("aktueller channellll: %s\n",channel_list[active_channel]->name);
-        printf("fadval: %f\n\n",channel_list[active_channel]->fader_val[output]);
-        printf("output: %d\n",output);
         changed=refresh_fader_value(channel_list[active_channel], output);
         changed=changed+refresh_mute(channel_list[active_channel]);
       
