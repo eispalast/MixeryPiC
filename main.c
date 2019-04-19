@@ -653,36 +653,6 @@ int main (int argc,char** argv){
         changed=refresh_fader_value(channel_list[active_channel], output);
         changed=changed+refresh_mute(channel_list[active_channel]);
       
-    }
-    /**
-     * Testdaten
-    channel *c1=calloc(1,sizeof(channel));
-    c1->number="02";
-    c1->fader_val[0]=0.5;
-    c1->fader_val[1]=0.01;
-    c1->name=calloc(10,sizeof(char));
-    c1->is_muted=false;
-    printf("Vorher: %f\n", c1->fader_val[0]);
-    refresh_fader_value(c1,0);
-    printf("Nachher: %f\n\n", c1->fader_val[0]);
-    printf("Vorher out 1: %f\n", c1->fader_val[0]);
-    refresh_fader_value(c1,0);
-    printf("Nachher: %f\n\n", c1->fader_val[0]);
-    c1->fader_val[0]=0.75;
-    printf("Nachherher: %f\n\n", c1->fader_val[0]);
-    set_fader(c1,0);
-    printf("Nachherherher: %f\n\n", c1->fader_val[0]);
-    refresh_channel_name(c1);
-    printf("Name: %s\n",c1->name);
-    refresh_mute(c1);
-    if(c1->is_muted==true){
-        printf("ist gemutet\n");
-    }
-    else
-    {
-        printf("ist nicht gemuted\n");
-    }
-    **/
-    
+    }    
     return 0;
 }
