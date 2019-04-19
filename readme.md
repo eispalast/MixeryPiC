@@ -10,7 +10,7 @@ Features
 * 8 buttons to choose channel
 * button to switch layers so you can choose from channel 1-8 or 9-16
 * button to mute all channels
-* rotary encoder to choose output (Main, 6 AUX-Busses) Push button to toggle fine-mode (control ever more precisely)
+* rotary encoder to choose output (Main, 6 AUX-Busses) Push button to toggle fine-mode (control even more precisely)
 * rotary encoder to increase/lower a channel's volume. Push button to mute channel
 * WiFi and/or ethernet connection possible
 * 2x16 LCD 
@@ -57,30 +57,30 @@ Installation
     * don't forget the *&*-symbol. Click [here](https://www.raspberrypi.org/documentation/linux/usage/rc-local.md "Information about rc.local") for further information.
 * Wire up the hardware as shown in this ![Sketch](https://gitlab.tubit.tu-berlin.de/timo.schlegel/MixeryPiC/blob/master/MixeryPi%20C%20Sketch.svg "Fritzing Sketch") and in this table:
 
-GPIO-Pin|Connected to
---------|------------
-4 | LCD RS
-17 | LCD E
-18 | LCD DATA4
-22 | LCD DATA5
-23 | LCD DATA6
-24 | LCD DATA7
-26 | Button Channel 1
-21 | Button Channel 2
-20 | Button Channel 3
-16 | Button Channel 4
-12 | Button Channel 5
-7 | Button Channel 6
-8 | Button Channel 7
-25 | Button Channel 8
-19 | Button Toggle Layer
-13 | Button Mute All Channels
-9 | Button Toggle Fine mode
-6 | Button Toggle Mute Channel
-5 | Volume knob CLK
-11 | Volume knob DT
-10| Choose output knob CLK
-27 | Choose output knob DT
+| GPIO-Pin | Connected to               |
+| -------- | -------------------------- |
+| 4        | LCD RS                     |
+| 17       | LCD E                      |
+| 18       | LCD DATA4                  |
+| 22       | LCD DATA5                  |
+| 23       | LCD DATA6                  |
+| 24       | LCD DATA7                  |
+| 26       | Button Channel 1           |
+| 21       | Button Channel 2           |
+| 20       | Button Channel 3           |
+| 16       | Button Channel 4           |
+| 12       | Button Channel 5           |
+| 7        | Button Channel 6           |
+| 8        | Button Channel 7           |
+| 25       | Button Channel 8           |
+| 19       | Button Toggle Layer        |
+| 13       | Button Mute All Channels   |
+| 9        | Button Toggle Fine mode    |
+| 6        | Button Toggle Mute Channel |
+| 5        | Volume knob CLK            |
+| 11       | Volume knob DT             |
+| 10       | Choose output knob CLK     |
+| 27       | Choose output knob DT      |
 
 You can choose different GPIO-pins, but make sure to change them in the `define`-section in the main.c-file.
 
@@ -98,5 +98,4 @@ Next I want to add:
 * controlling the FX-Channels 
 * controlling each parameter of the EQ for each channel. Maybe I'll get rid of the
 fine-mode in the future and make that button some kind of *Shift*-button which triggers different modes
-when pressed together with others buttons. 
-
+when pressed together with others buttons.
