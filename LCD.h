@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include "channel.h"
 char sign=1;
+
+
 char* construct_upper_line(char* ch_name, char* out_name){
 	char* line=calloc(17,sizeof(char));
 	
@@ -39,21 +41,16 @@ char* construct_upper_line(char* ch_name, char* out_name){
 		index++;
 	}
 	
-	
 	return line;
-	
 }
 
 char* construct_lower_line(channel *ch, int out){
-	
 	char* line=calloc(17,sizeof(char));
-	
 	int tiles=(int)(ch->fader_val[out]*11);
 	int percent= (int) (ch->fader_val[out]*100);
 	for (int i=0;i<12;i++){
 		if (i<=tiles){
 			line[i]=4;
-			sign++;
 		}
 		else{
 			line[i]=' ';
@@ -132,10 +129,6 @@ void lcdPrint_lower2(channel *ch, int out, int display){
 		}
 	}
 	lcdHome(display);
-}
-
-void lcdPrint_upper(channel ** ch_list,char** output_names, int total_ch, int output){
-
 }
 
 #endif

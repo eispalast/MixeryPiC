@@ -19,7 +19,7 @@ typedef struct _net_ans{
 }net_ans;
 
 int s;
-char* port= "10024";
+char* port= "10024"; //the port that the X-Air 18 works on
 char* BC="255.255.255.255";
 char* IP="";
 struct addrinfo hints;
@@ -63,14 +63,11 @@ int find_mixer(){
     free(infomessage);
     char* answerbuffer=calloc(128,sizeof(char));
     int received_bytes=recvfrom(s,answerbuffer,127,0,(struct sockaddr *)&their_addr, &addr_size);
-    printf("ich suche nun den Mixer!\n");
     char sock_address[46];
-    printf("ich habe antwort: %d bytes\n",received_bytes);
     if (received_bytes!=-1){
         char* temp=(char*)inet_ntop(their_addr.ss_family,
                      get_addr((struct sockaddr *)&their_addr),
                      sock_address, sizeof sock_address);
-        printf("IP des Mixers: %s\n",temp);
         getaddrinfo(temp, port, &hints, &mixer_IP);
         free(answerbuffer);
         return 0;
