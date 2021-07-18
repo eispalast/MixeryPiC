@@ -92,7 +92,7 @@ You can choose different GPIO-pins, but make sure to change them in the `define`
 Future updates
 --------------
 
-Yeah, yeah I know: Putting functions in the header-files is kind of weird and not how it is supposed to be. But it works ;) I will change that in the future. There is a lot of refactoring needed.
+There is a lot of refactoring needed.
 I also want to add some more features step by step and maybe some day I can control each and every parameter with this gadget.
 
 Next I want to add:
