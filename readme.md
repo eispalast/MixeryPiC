@@ -49,11 +49,12 @@ Installation
 * Connect to your X-Air 18 via WiFi (or to an external router that your X-Air is connected to)
 * Enable SSH on the Pi for future updates and maintenance ([HowTo](https://www.raspberrypi.org/documentation/remote-access/ssh/ "Activate SSH on Raspberry Pi"))
 * cd to the path where you saved this repository
-* type `make` in the console and press enter
+* cd into the directory "build". If it does not exist yet, type `mkdir build` and press enter.
+* type `cmake .. && make` in the console and press enter
 * ignore the warning
 * to autostart the program:
     * `cd` to /etc/ and open rc.local : `sudo nano rc.local`
-    * add the path to the programm, for example: `home/pi/MixeryPi/mix &`
+    * add the path to the programm, for example: `home/pi/MixeryPi/build/MixeryPi &`
     * don't forget the *&*-symbol. Click [here](https://www.raspberrypi.org/documentation/linux/usage/rc-local.md "Information about rc.local") for further information.
 * Wire up the hardware as shown in this ![Sketch](https://github.com/eispalast/MixeryPiC/blob/master/MixeryPi%20C%20Sketch.svg "Fritzing Sketch") and in this table:
 

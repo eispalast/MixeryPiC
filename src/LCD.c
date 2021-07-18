@@ -1,15 +1,6 @@
-#ifndef LCD_H
-#define LCD_H
+#include "LCD.h"
 
-#include <wiringPi.h>
-#include <lcd.h>
-#include <stdint.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include "channel.h"
 char sign=1;
-
 
 char* construct_upper_line(char* ch_name, char* out_name){
 	char* line=calloc(17,sizeof(char));
@@ -131,4 +122,3 @@ void lcdPrint_lower2(channel *ch, int out, int display){
 	lcdHome(display);
 }
 
-#endif

@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "channel.h"
-#include "LCD.h"
-#include "network.h"
+#include "lib/LCD.h"
+#include "lib/network.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -598,6 +598,9 @@ void setup_interrupts(){
 
 
 int main (int argc,char** argv){
+    printf("Welcome, this is MixeryPiC!\n"
+           "Make sure your mixer is switched on and in the same network.\n"
+           "For more information on how to set the system up visit https://github.com/eispalast/MixeryPiC\n");
     wiringPiSetupGpio();
     initialize_pins();
     setup_interrupts();
@@ -623,6 +626,7 @@ int main (int argc,char** argv){
             lcdPrintf(display,".");
             nanosleep(&ts,NULL);
         }
+        printf("Did not find tho mixer... yet\n");
     }
     
     channel_list=calloc(16,sizeof(channel*));
